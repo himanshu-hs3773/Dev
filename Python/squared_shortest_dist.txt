@@ -1,0 +1,37 @@
+num = 4
+posx = [0, 0, 1, 0]
+posy = [0, 2, 3, 0]
+mol = []
+dis_arr = []
+
+mol = [(posx[i], posy[i]) for i in range(num)]
+mol.sort(key=lambda x: x[0])
+print(mol)
+currdiff_x = float('inf')
+currdiff_dis = float("inf")
+
+def eucleadean_dis(mol1, mol2):
+    x_mol1, y_mol1 = mol1
+    x_mol2, y_mol2 = mol2
+    currdiff_dis = (x_mol2 - x_mol1)**2 + (y_mol2-y_mol1)**2
+    return currdiff_dis
+
+
+for i in range(num-1):
+    mol1 = mol[i]
+    mol2 = mol[i+1]
+    if mol1[0] != mol2[0]:
+        if mol[i][0] - mol[i+1][0] <= currdiff_x:
+            currdiff_x = mol[i][0] - mol[i+1][0]
+            if eucleadean_dis(mol1, mol2) <= currdiff_dis:
+                currdiff_dis = eucleadean_dis(mol1, mol2)
+
+    elif mol1[1] != mol2[1]:
+        if eucleadean_dis(mol1, mol2) <= currdiff_dis:
+            currdiff_dis = eucleadean_dis(mol1, mol2)
+
+
+
+print(currdiff_dis)
+
+

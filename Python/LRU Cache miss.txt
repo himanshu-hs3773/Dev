@@ -1,0 +1,36 @@
+num = 6
+
+pages = [1, 2, 1, 3, 7, 1, 2]
+
+maxCacheSize = 2
+
+cache = []
+
+miss = 0
+
+
+for page in pages:
+    if 0 <= page < num:
+        if len(cache) == maxCacheSize:
+            if page not in cache:
+                miss += 1
+                cache.pop(0)
+                cache.append(page)
+                
+            elif page in cache and page != cache[-1]:
+                cache.remove(page)
+                cache.append(page)
+                
+
+        else:
+            if page not in cache:
+                miss += 1
+                cache.append(page)
+                
+            elif page in cache and page != cache[-1]:
+                cache.remove(page)
+                cache.append(page)
+                
+print(miss)
+
+

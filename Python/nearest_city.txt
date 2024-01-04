@@ -1,0 +1,88 @@
+import copy
+import collections
+def findNearestCities(numOfCities, cities, xCoordinates, yCoordinates, numOfQueries, queries):
+    mapx = []
+    citieslist = {}
+    for i in range(numOfCities):
+        mapx.append([cities[i], xCoordinates[i], yCoordinates[i]])
+        citieslist[cities[i]] = [xCoordinates[i], yCoordinates[i]]
+    
+    mapx.sort(key = lambda p: p[1])
+    mapy = copy.deepcopy(mapx)
+    mapy.sort(key = lambda p: p[2])
+    
+    # cache for repeart query
+    cache = collections.defaultdict(str)
+    ans = []
+    #O(n)
+    for i in range(numOfQueries):
+        # x轴上比y轴, y轴上比x轴
+        city_name = queries[i]
+        city_x = citieslist[queries[i]][0]
+        city_y = citieslist[queries[i]][1]
+        
+        # if query is repeated, just return the answer
+        if queries[i] in cache:
+            ans.append(cache[queries[i]])
+            continue
+          
+        # find near city on x line and y line
+        near_x, dis_x = binarysearch([city_name, city_x, city_y], mapx, 'x')
+        near_y, dis_y = binarysearch([city_name, city_x, city_y], mapy, 'y')
+        
+        
+        cur_near = None
+        if not near_x and not near_y:
+            pass
+        elif near_x and near_y:
+            if dis_x < dis_y:
+                cur_near = near_x
+            elif dis_x == dis_y:
+                cur_near = near_x if near_x <= near_y else near_y
+            else:
+                cur_near = near_y
+        elif near_x or near_y:
+            cur_near = near_x if near_x else near_y
+          
+        # if there is a valid nearest city, update the cache
+        if cur_near != None:
+            cache[queries[i]] = cur_near
+            cache[cur_near] = queries[i]
+         
+        ans.append(cur_near)
+        
+    return ans
+        
+# give a val about a city(name, x, y), return nearest city with (name and distance)
+def binarysearch(val, lis, flag):
+    #O(nlogn)
+    ind = lis.index(val)
+    
+    n = len(lis)
+    left, right = float('inf'), float('inf')
+    
+    if flag == 'x':
+        a = 1
+        b = 2
+    elif flag == 'y' :
+        a = 2
+        b= 1
+        
+    if ind + 1 < n:
+        if lis[ind+1][a] == lis[ind][a]:
+            right = lis[ind+1][b] - lis[ind][b] 
+    if ind - 1 > 0:
+        if lis[ind-1][a] == lis[ind][a]:
+            left= lis[ind][b] - lis[ind-1][b] 
+        
+    if left == float('inf') and right == float('inf'):
+        return (None, float('inf'))
+    else:
+        if left <= right:
+            return (lis[ind-1][0], left)
+        elif left > right:
+            return (lis[ind+1][0], right)
+    
+# O(n^2logn)
+#findNearestCities(4, ["c1", "c2","c3", "c4"], [3, 2, 1, 3], [3, 2, 3, 4], 3, ["c1", "c2", "c3"])
+findNearestCities(5, ["green", "red","blue", "yellow", "pink"], [100, 200, 300, 400, 500], [100, 200, 300, 400, 500], 5, ["green", "red", "blue", "yellow", "pink"])

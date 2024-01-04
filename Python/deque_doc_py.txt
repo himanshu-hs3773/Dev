@@ -1,0 +1,19 @@
+Deque better than list, as deque provides an O(1) time complexity for append and pop operations at both ends 
+
+append() :- to insert val(a) at right.
+appendleft(a) :- to insert val(a) at left.
+pop() :- to delete at right.
+popleft() :- delete at left. 
+
+
+index(a, beg, end) :- returns the first index of the value(a), starting searching from beg till end index.
+insert(i, a) :- inserts the value in arguments(a) at index(i).
+remove(a) :- removes the first occurrence of value(a). 
+count(a) :- counts the number of occurrences of value(a). 
+
+
+extend(iterable) :- to add multiple values at the right end. de.extend([4,5,6] >> deque([1, 2, 3, 4, 5, 6])
+extendleft(iterable) :- add vals at left end. Order is reversed. de.extendleft([7,8,9]) >> deque([9, 8, 7, 1, 2, 3, 4, 5, 6])
+reverse() :- to reverse order of deque elements.
+ 
+rotate(+/-n) :- rotates deque. If n -ve, left rotation. Else right rotation.  de.rotate(-3) >> deque([1, 2, 3, 4, 5, 6, 9, 8, 7])

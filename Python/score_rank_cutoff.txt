@@ -1,0 +1,18 @@
+scores = [100, 50, 50, 25]
+cutOffRank = 3
+num = 7
+count = 0
+rank = 0
+
+if num == 0:
+    count = 0
+else:
+    score_set_list = sorted(list(set(scores)), reverse=True)
+    print(score_set_list)
+    for i in range(cutOffRank):
+        rank += 1
+        if rank <= cutOffRank:
+            count += scores.count(score_set_list[i])
+            rank += (scores.count(score_set_list[i]) - 1)
+
+print(count)

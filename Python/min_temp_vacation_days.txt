@@ -1,0 +1,18 @@
+
+
+vday = 8
+tempr = [62, 64, 77, 75, 71, 60, 79, 75]
+kdays = 4
+#list_of_kdays_temps = []
+list_of_kdays_minimas = []
+
+for i in range(len(tempr)-kdays+1):
+
+    #list_of_kdays_temps.append(tempr[i:i+kdays])
+    list_of_kdays_minimas.append(min(tempr[i:i+kdays]))
+
+print(list_of_kdays_minimas)
+#print(list_of_kdays_temps)
+
+#print(list_of_kdays_temps[list_of_kdays_minimas.index(max(list_of_kdays_minimas))])
+print(max(list_of_kdays_minimas))

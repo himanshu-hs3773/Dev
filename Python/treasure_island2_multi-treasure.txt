@@ -1,0 +1,146 @@
+from collections import deque
+class solution:
+    def shortestPath(self, grid):
+        if not grid or not grid[0]:
+            return 0
+        
+        res = float('inf')
+        row, col = len(grid), len(grid[0])
+        self.directions = [[0,1],[0,-1],[1,0],[-1,0]]
+        
+        for i in range(row):
+            for j in range(col):
+                if grid[i][j] == 'S':
+                    q = deque([[i,j,0]])
+                    res = min(self.bfs(q, grid, row, col), res)       
+        return res
+        
+    
+    def bfs(self, q, grid, row, col):
+        visited = [[-1 for _ in range(col)]for _ in range(row)]
+        while len(q):
+            i, j, step = q.popleft()
+            visited[i][j] = step
+            if grid[i][j] == 'X':
+                return step
+            
+            for d in self.directions:
+                next_i, next_j = i + d[0], j + d[1]
+                if next_i >= 0 and next_i < row and next_j >= 0 and next_j < col:
+                    if grid[next_i][next_j] != 'D' and visited[next_i][next_j] == -1:
+                        q.append([next_i, next_j, step+1])
+        return -1
+
+
+
+
+from collections import deque
+
+
+class Solution:
+
+    def bestRoute(self, graph):
+
+        minCost = float('inf')
+        for i in range(len(graph)):
+            for j in range(len(graph[0])):
+                if graph[i][j] == 'S':
+                    currCost = self.bestRouteFromSource(graph, [i, j])
+                    minCost = min(minCost, currCost)
+
+        if minCost == float('inf'):
+            minCost = -1
+        return minCost
+
+    def bestRouteFromSource(self, graph, point):
+        minCost = float('inf')
+        m = len(graph)
+        if not m:
+            return minCost
+        n = len(graph[0])
+        visited = [[False] * n for _ in range(m)]
+
+        queue = deque([(point[0], point[1], 0)])
+        while queue:
+            i, j, currCost = queue.popleft()
+            if not (0 <= i < m and 0 <= j < n) or visited[i][j] or graph[i][j] == 'D':
+                continue
+            if graph[i][j] == 'X':
+                minCost = min(minCost, currCost)
+
+            visited[i][j] = True
+            for x, y in [(i - 1, j), (i + 1, j), (i, j - 1), (i, j + 1)]:
+                queue.append((x, y, currCost + 1))
+
+        return minCost
+
+
+def main():
+    graphs = [
+        [
+            # shortest path is 4
+            ['S', 'O', 'O', 'O'],
+            ['D', 'O', 'D', 'O'],
+            ['O', 'O', 'O', 'S'],
+            ['X', 'D', 'D', 'O']
+        ],
+        [
+            # no shortest path - inf
+            ['S', 'O', 'O', 'O'],
+            ['D', 'O', 'D', 'O'],
+            ['O', 'D', 'O', 'S'],
+            ['X', 'D', 'D', 'O']
+        ],
+        [
+            # no obstacles - 2
+            ['S', 'O', 'O', 'O'],
+            ['O', 'O', 'O', 'S'],
+            ['O', 'O', 'X', 'O'],
+            ['X', 'O', 'O', 'O']
+        ],
+        [
+            # extreme paths - 2
+            ['S', 'O', 'O', 'O'],
+            ['D', 'D', 'D', 'O'],
+            ['S', 'O', 'X', 'O'],
+            ['O', 'D', 'D', 'D'],
+            ['O', 'O', 'O', 'X'],
+        ],
+        [
+            # some starting points are blocked - 4
+            ['S', 'D', 'S', 'O'],
+            ['D', 'D', 'O', 'O'],
+            ['D', 'D', 'O', 'O'],
+            ['O', 'X', 'D', 'X']
+        ],
+        [
+            # more than one but same shortest route - 3
+            ['S', 'O', 'O', 'S'],
+            ['O', 'D', 'O', 'O'],
+            ['O', 'D', 'O', 'O'],
+            ['S', 'O', 'O', 'X']
+        ],
+        [
+            # single row - 2
+            ['S', 'S', 'O', 'X']
+        ],
+        [
+            # single col - 3
+            ['S'],
+            ['S'],
+            ['O'],
+            ['O'],
+            ['X'],
+        ],
+        [
+            # no rows, no columns
+        ],
+    ]
+
+    s = Solution()
+    for graph in graphs:
+        print(s.bestRoute(graph))
+
+
+if __name__ == "__main__":
+    main()

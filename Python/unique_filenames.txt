@@ -1,0 +1,20 @@
+num = 7
+filenames = ["system", "access", "system", "access", "system", "access", "access", "system", "access"]
+
+dict_filenames = dict()
+res = []
+
+if not 1 <= num <= 10**4:
+    res = []
+else:
+    for i in filenames[0:num]:
+        if i not in dict_filenames and 1 <= len(i) <= 20:
+            dict_filenames[i] = 0
+            res.append(i)
+
+        elif 1 <= len(i) <= 20:
+            dict_filenames[i] += 1
+            repeated_filename = i + str(dict_filenames[i])
+            res.append(repeated_filename)
+
+print(res)
