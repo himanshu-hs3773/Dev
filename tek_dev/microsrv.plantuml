@@ -1,0 +1,53 @@
+@startuml
+
+!define RECTANGLE class
+!define ARROW ->
+
+RECTANGLE Frontend {
+  UserRequest
+  SendsRequestToAppointmentService
+  SendsRequestToVisitService
+}
+
+RECTANGLE AppointmentService {
+  ProcessesAppointmentScheduling
+  CommunicatesWithDatabase
+  CommunicatesWithExternalAPIs
+}
+
+RECTANGLE VisitService {
+  RecordsDetailsOfPatientVisits
+  ManagesUserProfiles
+  SendsNotificationsToUsers
+  CommunicatesWithDatabase
+  CommunicatesWithExternalAPIs
+}
+
+RECTANGLE Database {
+  StoresAndRetrievesAppointmentData
+  StoresAndRetrievesVisitData
+}
+
+RECTANGLE ExternalAPIs {
+  CommunicatesWithExternalServices
+}
+
+RECTANGLE CloudServices {
+  ProvidesScalabilityAndAvailability
+  EnsuresDataSecurity
+}
+
+Frontend.SendsRequestToAppointmentService ARROW AppointmentService : ProcessesAppointmentScheduling
+Frontend.SendsRequestToVisitService ARROW VisitService : RecordsDetailsOfPatientVisits
+AppointmentService.CommunicatesWithDatabase ARROW Database : StoresAndRetrievesAppointmentData
+AppointmentService.CommunicatesWithExternalAPIs ARROW ExternalAPIs : CommunicatesWithExternalServices
+VisitService.ManagesUserProfiles ARROW Database : StoresAndRetrievesVisitData
+VisitService.SendsNotificationsToUsers ARROW ExternalAPIs : CommunicatesWithExternalServices
+VisitService.CommunicatesWithDatabase ARROW Database : StoresAndRetrievesVisitData
+
+CloudServices.ProvidesScalabilityAndAvailability ARROW AppointmentService
+CloudServices.ProvidesScalabilityAndAvailability ARROW VisitService
+CloudServices.EnsuresDataSecurity ARROW Database
+CloudServices.EnsuresDataSecurity ARROW ExternalAPIs
+
+@enduml

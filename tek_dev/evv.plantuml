@@ -1,0 +1,51 @@
+@startuml
+
+!define RECTANGLE class
+!define ARROW ->
+
+RECTANGLE Frontend {
+  UserRequest
+  SendsRequestToBackend
+}
+
+RECTANGLE BackendMicroservices {
+  AppointmentService
+  VisitService
+  UserService
+  NotificationService
+}
+
+RECTANGLE Database {
+  StoresAndRetrievesData
+}
+
+RECTANGLE ExternalAPIs {
+  CommunicatesWithExternalServices
+}
+
+RECTANGLE ExternalServices {
+  ExternalAPI
+}
+
+RECTANGLE Notification {
+  SendsAlertsAndMessages
+}
+
+RECTANGLE User {
+  CommunicatesWithExternalServices
+}
+
+Frontend.SendsRequestToBackend ARROW BackendMicroservices.AppointmentService : ProcessesAppointmentScheduling
+BackendMicroservices.AppointmentService.ARROW BackendMicroservices.VisitService : RecordsDetailsOfPatientVisits
+BackendMicroservices.VisitService.ARROW BackendMicroservices.UserService : ManagesUserProfiles
+BackendMicroservices.UserService.ARROW BackendMicroservices.NotificationService : SendsNotificationsToUsers
+BackendMicroservices.NotificationService.ARROW Database : StoresAndRetrievesData
+Notification.SendsAlertsAndMessages ARROW ExternalAPIs : CommunicatesWithExternalServices
+ExternalAPIs.CommunicatesWithExternalServices ARROW ExternalServices : ExternalAPI
+ExternalServices.ARROW Notification : SendsAlertsAndMessages
+ExternalServices.ARROW User : CommunicatesWithExternalServices
+User.ARROW ExternalServices : CommunicatesWithExternalServices
+ExternalAPIs.ARROW User : CommunicatesWithExternalServices
+User.ARROW Notification : ViewsAndRespondsToNotifications
+
+@enduml
