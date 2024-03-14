@@ -83,3 +83,7 @@ Creating shim for 'rabbitmq-upgrade'.```
 https://github.com/redis-developer/redis-datasets/tree/master?tab=readme-ov-file
 https://dev.to/redis/top-10-sample-dataset-for-redis-for-you-28l7
 https://redis.readthedocs.io/en/stable/examples/connection_examples.html#Connecting-to-a-default-Redis-instance,-running-locally.
+
+
+## AirFlow
+- Airflow+Docker+Windows: [Ref](https://medium.com/@garc1a0scar/how-to-start-with-apache-airflow-in-docker-windows-902674ad1b)
