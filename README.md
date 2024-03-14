@@ -45,6 +45,9 @@ Python312
 - >python.exe -m pip install --upgrade pip
 - >pip list
 
+## Local setup(Win)
+- >source venv/Scripts/activate
+
 ## FastAPI
 - [Conda Windows](https://stackoverflow.com/questions/49392719/get-the-anaconda-prompt-running-in-the-pycharm-terminal)
 - `uvicorn fastapi_dev.main:app --reload`

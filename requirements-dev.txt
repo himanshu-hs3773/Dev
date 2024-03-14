@@ -1,0 +1,13 @@
+bandit[toml]==1.7.5
+docformatter
+eradicate
+flake8
+isort
+mkdocs-material
+mypy
+pre-commit
+pylint
+pyink
+pytest
+vulture
+xenon

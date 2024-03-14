@@ -1,6 +1,5 @@
 brotlipy==0.7.0
 certifi==2021.10.8
-numpy==1.23.1
 pandas==1.4.3
 pycosat==0.6.3
 python-dateutil==2.8.2
@@ -8,3 +7,7 @@ pytz==2022.1
 uvicorn==0.25.0
 fastapi==0.108.0
 redis==5.0.1
+sqlalchemy
+httpx
+json_log_formatter
+json_logging

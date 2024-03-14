@@ -1,0 +1,37 @@
+[build-system]
+requires = ["setuptools>=68.0.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "health_stream"
+version = "0.1"
+readme = "README.md"
+classifiers = [
+]
+dependencies = [
+]
+[project.optional-dependencies]
+dev = [
+    "docformatter",
+    "flake8",
+    "isort",
+    "mypy",
+    "pre-commit",
+    "pylint",
+    "pyink",
+    "bandit[toml]",
+    "vulture",
+    "eradicate",
+]
+
+[tool.black]
+max-line-length = 99
+target-version = ["py312"]
+
+[tool.flake8]
+max-line-length = 99
+exclude = [
+    "tests",
+    "./.*",
+    "venv"
+]
