@@ -8,7 +8,17 @@ class Solution:
                 dp[x] = min(dp[x], dp[x - coin] + 1)
         return dp[amount] if dp[amount] != float('inf') else -1 
 
-
+class Solution:
+  def coinChange(self, coins: List[int], amount: int) -> int:
+    remain, n = 1 << amount, 0
+    while not remain & 1:
+      shiftSum = 0
+      for coin in coins:
+        shiftSum |= remain >> coin
+      if not shiftSum: return -1
+      remain = shiftSum
+      n += 1
+    return n
 
 public class Solution {
   public int coinChange(int[] coins, int amount) {
